@@ -13,11 +13,23 @@
       },
     ],
   },
+  // {
+  //   path: '/welcome',
+  //   name: 'welcome',
+  //   icon: 'smile',
+  //   component: './Welcome',
+  // },
   {
-    path: '/welcome',
-    name: 'welcome',
+    path: '/home',
+    name: 'home',
     icon: 'smile',
-    component: './Welcome',
+    component: './Home',
+  },
+  {
+    path: '/myPost',
+    name: 'myPost',
+    icon: 'table',
+    component: './MyPost',
   },
   {
     path: '/admin',
@@ -36,15 +48,15 @@
       },
     ],
   },
-  {
-    name: 'list.table-list',
-    icon: 'table',
-    path: '/list',
-    component: './TableList',
-  },
+  // {
+  //   name: 'list.table-list',
+  //   icon: 'table',
+  //   path: '/list',
+  //   component: './TableList',
+  //  },
   {
     path: '/',
-    redirect: '/welcome',
+    redirect: '/home',
   },
   {
     component: './404',

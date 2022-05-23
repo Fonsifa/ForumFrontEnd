@@ -1,5 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, message, Input, Drawer } from 'antd';
+import { Button, message, Input, Drawer, Typography } from 'antd';
 import React, { useState, useRef } from 'react';
 import { useIntl, FormattedMessage } from 'umi';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
@@ -115,14 +115,7 @@ const TableList: React.FC = () => {
       tip: 'The rule name is the unique key',
       render: (dom, entity) => {
         return (
-          <a
-            onClick={() => {
-              setCurrentRow(entity);
-              setShowDetail(true);
-            }}
-          >
-            {dom}
-          </a>
+          <Typography.Text>{dom}</Typography.Text>
         );
       },
     },

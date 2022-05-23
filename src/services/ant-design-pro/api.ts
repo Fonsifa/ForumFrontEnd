@@ -70,6 +70,7 @@ export async function updateRule(options?: { [key: string]: any }) {
 
 /** 新建规则 POST /api/rule */
 export async function addRule(options?: { [key: string]: any }) {
+  console.log({...options});
   return request<API.RuleListItem>('/api/rule', {
     method: 'POST',
     ...(options || {}),
