@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button, Card, Drawer, Form, Input, message, PageHeader, Select, Space, Typography} from 'antd';
 import { addPost, getPosts, getTags } from '@/services/forum/forum';
 import { FormattedMessage, useIntl } from 'umi';
@@ -53,8 +53,31 @@ const Home: React.FC = () => {
     const [posts,setPosts]=useState<Array<API.Post>>([]);
     const [showAddPost,setShowAddPost]=useState(false);
     const [selectTags,setSelecteTags]=useState<Array<number>>([]);
+    const [loading,setLoading]=useState(true);
+    const [tagId,setTagId]=useState(0);
     const intl = useIntl();
     const ref = useRef();
+
+    useEffect(()=>{
+      if(loading){
+        getPost();
+      }
+    });
+    const getPost = async()=>{
+      try{
+          const res = await getPosts(tagId);
+          if(res.errCode===0){
+              setPosts(res.data);
+          }
+      }catch(error){
+          const defaultLoginFailureMessage = intl.formatMessage({
+              id: 'API fall',
+              defaultMessage: '获取失败，请重试！',
+            });
+            message.error(defaultLoginFailureMessage);
+      }
+      setLoading(false);
+  }
 
     const columns: ProColumns<API.Tag>[]=[
         {
@@ -114,6 +137,7 @@ const Home: React.FC = () => {
                 onClick={async () => {
                     try{
                         const newPosts=await getPosts(record.id);
+                        setTagId(record.id);
                         setPosts(newPosts.data);
                         setIsDetail(true);
                     }catch(error){
@@ -218,10 +242,8 @@ const Home: React.FC = () => {
         try{
             const res= await addPost({...payload});
             if (res.errCode===0){
-                const newPosts=posts;
-                newPosts.push(res.data);
-                setPosts(newPosts);
                 setShowAddPost(false);
+                setLoading(true);
             }
         }catch(error){
             const defaultLoginFailureMessage = intl.formatMessage({

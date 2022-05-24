@@ -13,6 +13,7 @@ const emptyPost:API.Post={
     uid: 0,
     user: undefined,
     time: "-",
+    tags: [],
 }
 
 const options=[];
@@ -120,6 +121,7 @@ const MyPost:React.FC=()=>{
                                 defaultMessage: '已刪除！',
                               });
                             message.success(defaultSuccessMessage)
+                            setLoading(true);
                         }else{
                             const defaultLoginFailureMessage = intl.formatMessage({
                                 id: 'API fall',
@@ -149,7 +151,6 @@ const MyPost:React.FC=()=>{
                        })
                    }
                    setTagsId(ids);
-                   console.log(ids);
                    setShowModifier(true);
                }}
              >
@@ -172,6 +173,7 @@ const MyPost:React.FC=()=>{
             const res = await updatePost({...payload});
             if(res.errCode===0){
                 setShowModifier(false);
+                setLoading(true);
             }
         }catch(error){
             const defaultLoginFailureMessage = intl.formatMessage({
